@@ -4,7 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.boot.web.embedded.tomcat.TomcatProtocolHandlerCustomizer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
+
+import java.util.concurrent.Executors;
 
 @SpringBootApplication
 public class SpringVirtualThreadApplication {
@@ -24,4 +28,11 @@ public class SpringVirtualThreadApplication {
         repository.save(ProductEntity.create("product4", 40));
         repository.save(ProductEntity.create("product5", 50));
     }
+
+//    @Bean
+//    public TomcatProtocolHandlerCustomizer<?> tomcatProtocolHandlerCustomizer() {
+//        return protocolHandler -> {
+//            protocolHandler.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
+//        };
+//    }
 }
