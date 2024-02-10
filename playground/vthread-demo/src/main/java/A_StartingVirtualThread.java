@@ -1,3 +1,6 @@
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class A_StartingVirtualThread {
 
     public static void main(String[] args) throws InterruptedException {
@@ -12,5 +15,9 @@ public class A_StartingVirtualThread {
                 .unstarted(() -> System.out.println("Virtual Thread: " + Thread.currentThread()));
         t2.start();
         t2.join();
+
+        ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor();
+        executorService.submit(() -> System.out.println("Virtual Thread: " + Thread.currentThread()));
+        Thread.sleep(1000);
     }
 }

@@ -10,8 +10,7 @@ public class B_JumpingVirtualThread {
 //    VirtualThread[#20]/runnable@ForkJoinPool-1-worker-4
 //    VirtualThread[#20]/runnable@ForkJoinPool-1-worker-7
 //    VirtualThread[#20]/runnable@ForkJoinPool-1-worker-1
-    int totalVirtualThread = 1_000_000;
-    List<Thread> threads = IntStream.range(0, totalVirtualThread)
+    List<Thread> threads = IntStream.range(0, 1_000_000)
         .mapToObj(index -> Thread.ofVirtual().unstarted(() -> {
           if (index == 0) {
             // VirtualThread[#20]/runnable@ForkJoinPool-1-worker-1
