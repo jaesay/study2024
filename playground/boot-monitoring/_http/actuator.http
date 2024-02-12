@@ -1,0 +1,13 @@
+### shutdown
+POST http://localhost:8080/actuator/shutdown
+
+### loggers 더 자세히 조회 `http://localhost:8080/actuator/loggers/{로거이름}`
+GET http://localhost:8080/actuator/loggers/org.example.actuator.controller
+
+### 실시간 로그 레벨 변경
+POST http://localhost:8080/actuator/loggers/org.example.actuator.controller
+Content-Type: application/json
+
+{
+  "configuredLevel": "TRACE"
+}
