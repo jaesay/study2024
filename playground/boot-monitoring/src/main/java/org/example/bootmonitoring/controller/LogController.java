@@ -1,4 +1,4 @@
-package org.example.actuator.controller;
+package org.example.bootmonitoring.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

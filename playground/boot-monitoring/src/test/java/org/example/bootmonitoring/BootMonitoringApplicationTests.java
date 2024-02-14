@@ -1,4 +1,4 @@
-package org.example.actuator;
+package org.example.bootmonitoring;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

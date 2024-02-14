@@ -11,3 +11,6 @@ Content-Type: application/json
 {
   "configuredLevel": "TRACE"
 }
+
+### /log 요청 & HTTP Status = 200
+http://localhost:8080/actuator/metrics/http.server.requests?tag=uri:/log&tag=status:200

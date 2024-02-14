@@ -1,0 +1,8 @@
+### order
+GET http://localhost:8080/order
+
+### cancel
+GET http://localhost:8080/cancel
+
+### stock
+GET http://localhost:8080/stock

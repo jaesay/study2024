@@ -12,4 +12,9 @@ management:
 
 logging:
   level:
-    org.example.actuator.controller: debug
+    org.example.bootmonitoring.controller: debug
+
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
