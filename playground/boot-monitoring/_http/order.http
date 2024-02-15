@@ -11,4 +11,7 @@ GET http://localhost:8080/stock
 GET http://localhost:8080/actuator/metrics/my.order
 
 ###
+GET http://localhost:8080/actuator/metrics/my.stock
+
+###
 GET http://localhost:8080/actuator/prometheus
