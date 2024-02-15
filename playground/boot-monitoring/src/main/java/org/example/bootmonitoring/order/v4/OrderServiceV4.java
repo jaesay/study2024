@@ -7,7 +7,7 @@ import org.example.bootmonitoring.order.OrderService;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Timed("my.order")
+@Timed(value = "my.order", percentiles = {0.5, 0.95, 0.99})
 @Slf4j
 public class OrderServiceV4 implements OrderService {
 

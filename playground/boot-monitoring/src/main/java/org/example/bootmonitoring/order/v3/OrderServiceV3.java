@@ -19,6 +19,7 @@ public class OrderServiceV3 implements OrderService {
     @Override
     public void order() {
         Timer timer = Timer.builder("my.order")
+                .publishPercentiles(0.5, 0.95, 0.99)
                 .tag("class", this.getClass().getName())
                 .tag("method", "order")
                 .description("order")
