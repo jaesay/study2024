@@ -5,16 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.food.ordering.system</groupId>
-        <artifactId>order-domain</artifactId>
+        <artifactId>order-service</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>order-application-service</artifactId>
+    <artifactId>order-messaging</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.food.ordering.system</groupId>
-            <artifactId>order-domain-core</artifactId>
+            <artifactId>order-application-service</artifactId>
         </dependency>
     </dependencies>
 
