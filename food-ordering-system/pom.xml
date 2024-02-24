@@ -13,6 +13,9 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>food-ordering-system</name>
     <description>food-ordering-system</description>
+    <modules>
+        <module>order-service</module>
+    </modules>
 
     <packaging>pom</packaging>
 
