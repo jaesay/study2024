@@ -7,7 +7,7 @@ import com.food.ordering.system.order.service.domain.valueobject.OrderItemId;
 
 /**
  * 코어이기 때문에 lombok 종속성 없이 생성 (By innerBuilder plugin)
- * 생성자 등에서 비즈니스 로직 검사 시에도 장정이 있음..
+ * 생성자에서 유효성 검사 시에도 장점이 있음..
  */
 public class OrderItem extends BaseEntity<OrderItemId> {
 
