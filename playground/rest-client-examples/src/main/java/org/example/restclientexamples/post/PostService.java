@@ -9,7 +9,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostService {
 
-    private final PostClient postClient;
+    private final PostHttpInterfaceClient postClient;
 
     public List<Post> getPosts() {
         return postClient.findAll();
