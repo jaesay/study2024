@@ -17,11 +17,11 @@ public class RestClientExamplesApplication {
         SpringApplication.run(RestClientExamplesApplication.class, args);
     }
 
-    @Bean
-    ApplicationRunner applicationRunner(PostClient postClient) {
-        return args -> {
-            List<Post> posts = postClient.findAll();
-            System.out.println(posts);
-        };
-    }
+//    @Bean
+//    ApplicationRunner applicationRunner(PostClient postClient) {
+//        return args -> {
+//            List<Post> posts = postClient.findAll();
+//            System.out.println(posts);
+//        };
+//    }
 }
