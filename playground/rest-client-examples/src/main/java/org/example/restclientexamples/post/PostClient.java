@@ -2,6 +2,7 @@ package org.example.restclientexamples.post;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.JdkClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
@@ -13,8 +14,12 @@ public class PostClient {
     private final RestClient restClient;
 
     public PostClient(RestClient.Builder builder) {
+        JdkClientHttpRequestFactory factory = new JdkClientHttpRequestFactory();
+        factory.setReadTimeout(10_000);
+
         this.restClient = builder
                 .baseUrl("https://jsonplaceholder.typicode.com")
+                .requestFactory(factory)
                 .build();
     }
 
