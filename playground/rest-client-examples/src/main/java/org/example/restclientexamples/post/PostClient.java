@@ -1,7 +1,9 @@
 package org.example.restclientexamples.post;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.JdkClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
@@ -10,11 +12,12 @@ import org.springframework.web.client.RestClient;
 import java.util.List;
 
 @Component
+@Slf4j
 public class PostClient {
 
     private final RestClient restClient;
 
-    public PostClient(RestClient.Builder builder) {
+    public PostClient(RestClient.Builder builder, ClientHttpRequestInterceptor myInterceptor) {
 //        JdkClientHttpRequestFactory factory = new JdkClientHttpRequestFactory();
 //        factory.setReadTimeout(10_000);
 
@@ -23,6 +26,12 @@ public class PostClient {
         this.restClient = builder
                 .baseUrl("https://jsonplaceholder.typicode.com")
 //                .requestFactory(factory)
+//                .requestInterceptor(myInterceptor)
+                .requestInterceptor((request, body, execution) -> {
+                    log.info("Intercepting request: " + request.getURI());
+                    request.getHeaders().add("x-request-id", "Custom-Value");
+                    return execution.execute(request, body);
+                })
                 .build();
     }
 
