@@ -44,3 +44,7 @@ docker run --rm -p 8080:8080 greeting-service:0.0.1-SNAPSHOT
 # 버전 지정 안하면 이미지를 못 가져와서 버전 지정, 최신 버전을 사용하면 service-envoy.yaml 설정 오류 발생
 docker run -v $(pwd)/envoy-conf:/envoy-conf -p 80:80 -p 8081:8081 -it envoyproxy/envoy-alpine:v1.10.0 envoy -c ./envoy-conf/service-envoy.yaml
 ```
+
+*Istio*
+ch03 예제 코드는 1.2.2 버전에 맞춰져 있지만 1.2.2 istioctl 동작하지 않아서 공식 문서 사이트 예제로 확인
+https://istio.io/latest/docs/setup/getting-started/
