@@ -1,0 +1,47 @@
+static_resources:
+  listeners: # Envoy가 컨테이너의 포트 80을 수신하고 있음을 지정한다.
+  - address:
+      socket_address:
+        address: 0.0.0.0
+        port_value: 80
+    filter_chains: # 리스너는 filter_chain과 연관돼 있다. 필터 체인에는 네트워크 계층 7의 HTTP 필터가 있다.
+    - filters: # 필터에는 /greeting 위치로 가는 모든 도메인 이름과 일치하는 경로가 있다. 이 설정은 모든 요청을 greeting-service로 라우팅한다.
+      - name: envoy.http_connection_manager
+        typed_config:
+          "@type": type.googleapis.com/envoy.config.filter.network.http_connection_manager.v2.HttpConnectionManager
+          codec_type: auto
+          stat_prefix: ingress_http
+          route_config:
+            name: local_route
+            virtual_hosts:
+            - name: service
+              domains:
+              - "*"
+              routes:
+              - match:
+                  prefix: "/greeting"
+                route:
+                  cluster: local_service
+          http_filters:
+          - name: envoy.router
+            typed_config: {}
+  clusters: # greeting-service 의 위치는 클러스터로 정의된다. 서비스의 여러 인스턴스와 가능한 로드 밸런싱 메커니즘을 정의하는 데 사용할 수 있다. 이 구성에는 포트 8080에서 서비스를 실행한다. 시스템의 IP 주소는 도커 게이트웨이의 주소를 지정한다. 다음 명령으로 도커 게이트웨이 주소를 확인할 수 있다: `docker network inspect bridge`
+  - name: local_service
+    connect_timeout: 0.25s
+    type: strict_dns
+    lb_policy: round_robin
+    load_assignment:
+      cluster_name: local_service
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: 172.17.0.1
+                port_value: 8080
+admin: # Envoy에는 통계를 가져오고 프록시를 구성하는 데 사용할 수 있는 관리 서비스가 있다. 위 구성에서 관리 서비스는 컨테이너의 8081 포트에서 실행된다.
+  access_log_path: "/dev/null"
+  address:
+    socket_address:
+      address: 0.0.0.0
+      port_value: 8081
