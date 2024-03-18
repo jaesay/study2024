@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment-5.0
+  labels:
+    app: webapp
+    version: v5.0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+        version: v5.0
+    spec:
+      containers:
+        - name: webapp
+          image: web-app:5.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment-5.1
+  labels:
+    app: webapp
+    version: v5.1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+        version: v5.1
+    spec:
+      containers:
+        - name: webapp
+          image: web-app:5.1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment-5.2
+  labels:
+    app: webapp
+    version: v5.2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  template: # Istio 라우팅은 Deployment template에 포함되지 않은 포트를 적용한 경우 무시된다.
+    metadata:
+      labels:
+        app: webapp
+        version: v5.2
+    spec:
+      containers:
+        - name: webapp
+          image: web-app:5.2
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5

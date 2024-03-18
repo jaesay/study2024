@@ -1,7 +1,7 @@
 ## Getting Started
 
 ### 기본 명령어
-*Kubernetes*
+*Kubernetes(ch01)*
 ```bash
 # 이미지를 로컬 환경에 저장하고 레지스트리로 전송한 다음 Minikube 에서 가져오는 대신 컨테이너 이미지를 Minikube 인스턴스에 직접 저장할 수 있다.
 eval $(minikube docker-env)
@@ -35,7 +35,7 @@ kubectl delete -f <yaml-file>
 kubectl delete all --all
 ```
 
-*Envoy*
+*Envoy(ch02)*
 ```bash
 # 예제 서비스(greeting-service) 실행
 ./gradlew bootBuildImage
@@ -45,8 +45,48 @@ docker run --rm -p 8080:8080 greeting-service:0.0.1-SNAPSHOT
 docker run -v $(pwd)/envoy-conf:/envoy-conf -p 80:80 -p 8081:8081 -it envoyproxy/envoy-alpine:v1.10.0 envoy -c ./envoy-conf/service-envoy.yaml
 ```
 
-*Istio*
+*Istio(ch03)*
 
 ch03 예제 코드는 1.2.2 버전에 맞춰져 있지만 1.2.2 istioctl 동작하지 않아서 공식 문서 사이트 예제로 확인
 - https://istio.io/latest/docs/setup/getting-started/
 - issue: https://github.com/istio/istio/issues/44090
+
+*ch04*
+```bash
+docker build . -t web-app:5.0 --build-arg ver=5.0
+docker build . -t web-app:5.1 --build-arg ver=5.1
+docker build . -t web-app:5.2 --build-arg ver=5.2
+
+kubectl apply -f webapp-deployment-v5.yaml
+kubectl apply -f webapp-service.yaml
+
+kubectl apply -f frontend-deployment.yaml
+kubectl apply -f frontend-service.yaml
+
+kubectl port-forward svc/frontendservice 8080:80
+
+# Istio 설치
+istioctl install --set profile=demo -y
+
+kubectl apply -f destination-rule.yaml
+
+kubectl get destinationrules -o yaml
+kubectl get dr -o yaml
+
+kubectl apply -f webservice-simple-vs.yaml
+kubectl get virtualservices
+kubectl get vs
+
+kubectl delete -f webapp-deployment-v5.yaml
+kubectl delete -f frontend-deployment.yaml
+
+# default 네임스페이스에 사이드카 인젝터가 envoy 사이드카를 자동으로 추가하기 위해 레이블 추가 
+kubectl label namespace default istio-injection=enabled
+
+kubectl apply -f webapp-deployment-v5.yaml
+kubectl apply -f frontend-deployment.yaml
+
+kubectl get pod webapp-deployment-5.0-85d5f6fc85-hbmkj -o yaml
+
+kubectl port-forward svc/frontendservice 8080:80
+```
