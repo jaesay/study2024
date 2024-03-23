@@ -105,4 +105,12 @@ kubectl apply -f webservice-httplookup-vs.yaml
 kubectl exec pod/frontend-deployment-8496d98df7-c299q -- wget -O - http://webservice/
 kubectl exec pod/frontend-deployment-8496d98df7-c299q -- wget -O - --header='x-upgrade: TRUE' http://webservice/
 
+# 가중치 분배
+kubectl apply -f webservice-wtdist-vs.yaml
+
+kubectl exec pod/frontend-deployment-8496d98df7-c299q -it -- sh -il
+frontend-deployment-8496d98df7-c299q:/# wget -qO - http://webservice
+frontend-deployment-8496d98df7-c299q:/# wget -qO - http://webservice
+frontend-deployment-8496d98df7-c299q:/# wget -qO - http://webservice
+frontend-deployment-8496d98df7-c299q:/# exit
 ```
