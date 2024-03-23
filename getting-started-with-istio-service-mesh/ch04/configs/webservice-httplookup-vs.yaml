@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: webservice-httplookup-vs
+spec:
+  hosts:
+    - webservice
+  http:
+    - match:
+        - headers:
+            x-upgrade:
+              exact: "TRUE" # istio 구성은 match 속성에 대해 문자열을 사용해야 한다. true, TRUE, 25와 같은 문자열은 적절한 데이터 유형으로 변환되기 떄문에 직접 전달할 수 없다. 이런 값은 이전 구성에서 했던 것처럼 큰 따옴표로 묶어 문자열로 반환할 수 있다.
+      route:
+        - destination:
+            host: webservice
+            subset: v1
+    - route:
+        - destination:
+            host: webservice
+            subset: v0

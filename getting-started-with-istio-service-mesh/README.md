@@ -93,9 +93,16 @@ kubectl get pod webapp-deployment-5.0-85d5f6fc85-hbmkj -o yaml
 
 kubectl port-forward svc/frontendservice 8080:80
 
-# 웹 서비스 호스트를 처리하는 VirtualService는 하나만 있어야 한다.
-kubectl create -f 
+# HTTP Rewrite
+# 웹 서비스 호스트를 처리하는 VirtualService는 하나만 있어야 한다. 두개가 있으면 먼저 만든것 하나만 적용되는 것 같다.
+kubectl create -f webservice-rewrite-vs.yaml
 
-# 정상 응답
 kubectl exec pod/frontend-deployment-8496d98df7-c299q -- wget -O - http://webservice/hello
+
+# HTTP 속성 조회
+kubectl apply -f webservice-httplookup-vs.yaml
+
+kubectl exec pod/frontend-deployment-8496d98df7-c299q -- wget -O - http://webservice/
+kubectl exec pod/frontend-deployment-8496d98df7-c299q -- wget -O - --header='x-upgrade: TRUE' http://webservice/
+
 ```
