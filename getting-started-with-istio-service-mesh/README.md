@@ -3,6 +3,9 @@
 ### 기본 명령어
 *Kubernetes(ch01)*
 ```bash
+# 미니큐브 실행
+
+
 # 이미지를 로컬 환경에 저장하고 레지스트리로 전송한 다음 Minikube 에서 가져오는 대신 컨테이너 이미지를 Minikube 인스턴스에 직접 저장할 수 있다.
 eval $(minikube docker-env)
 
@@ -89,4 +92,10 @@ kubectl apply -f frontend-deployment.yaml
 kubectl get pod webapp-deployment-5.0-85d5f6fc85-hbmkj -o yaml
 
 kubectl port-forward svc/frontendservice 8080:80
+
+# 웹 서비스 호스트를 처리하는 VirtualService는 하나만 있어야 한다.
+kubectl create -f 
+
+# 정상 응답
+kubectl exec pod/frontend-deployment-8496d98df7-c299q -- wget -O - http://webservice/hello
 ```
