@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: webservice-cannery-vs
+spec:
+  hosts:
+    - webservice
+  http:
+  - match: # 호스트 user1.com에서 시작된 요청을 제외한 모든 요청이 v0 서비스에서 제공된다. 또한 호스트 user1.com에서 시작된 요청의 10%가 v1 webservice에서 제공된다. 나머지는 모두 v0 버전으로 라우팅된다.
+    - headers:
+        host:
+          exact: "user1.com"
+    route:
+    - destination:
+        host: webservice
+        subset: v1
+      weight: 10
+    - destination:
+        host: webservice
+        subset: v0
+      weight: 90
+  - route :
+    - destination:
+        host: webservice
+        subset: v0
