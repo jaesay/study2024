@@ -166,4 +166,13 @@ kubectl apply -f service-entry.yaml
 kubectl exec pod/frontend-deployment-8496d98df7-c299q -it -- sh -il
 frontend-deployment-8496d98df7-c299q:/# wget -qSO - http://en.wikipedia.org > /dev/null
 frontend-deployment-8496d98df7-c299q:/# wget -qSO - https://en.wikipedia.org > /dev/null
+
+# Egress Gateway
+kubectl apply -f egress-gateway.yaml
+
+kubectl exec pod/frontend-deployment-8496d98df7-c299q -it -- sh -il
+frontend-deployment-8496d98df7-c299q:/# frontend-deployment-8496d98df7-c299q:/# wget -qSO - http://en.wikipedia.org > /dev/null
+
+## istio-system 네임스페이스 내에서 istio=egressgateway 레이블을 가진 모든 포드 중 istio-proxy 컨테이너의 로그를 조회
+kubectl logs -l istio=egressgateway -c istio-proxy -n istio-system
 ```
