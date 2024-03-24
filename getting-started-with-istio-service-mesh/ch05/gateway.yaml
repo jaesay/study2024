@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: webapp-gateway
+spec:
+  selector:
+    istio: ingressgateway # istio-ingressgateway pod 의 라벨과 일치해야 된다는 것 같다.
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*.greetings.com"
+#    - '*.default.svc'

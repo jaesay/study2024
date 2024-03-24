@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: webservice-wtdist-vs
+spec:
+  hosts:
+    - webservice
+    - webservice.greetings.com
+  gateways :
+    - webapp-gateway
+    - mesh # mesh는 gateways 속성을 생략할 때의 기본 동작이다. 없으면 서비스끼리 통신할 때 Istio 서비스 프록시에서 Virtual Service가 제거된다.
+  http:
+  - route:
+    - destination:
+        host: webservice
+        subset: v1
+      weight: 25
+    - destination:
+        host: webservice
+        subset: v0
+      weight: 75

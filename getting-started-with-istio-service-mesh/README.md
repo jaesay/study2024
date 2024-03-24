@@ -54,7 +54,8 @@ ch03 예제 코드는 1.2.2 버전에 맞춰져 있지만 1.2.2 istioctl 동작�
 - https://istio.io/latest/docs/setup/getting-started/
 - issue: https://github.com/istio/istio/issues/44090
 
-*ch04*
+*VirtualService (ch04)*
+
 ```bash
 docker build . -t web-app:5.0 --build-arg ver=5.0
 docker build . -t web-app:5.1 --build-arg ver=5.1
@@ -109,6 +110,24 @@ kubectl exec pod/frontend-deployment-8496d98df7-c299q -- wget -O - --header='x-u
 kubectl apply -f webservice-wtdist-vs.yaml
 
 kubectl exec pod/frontend-deployment-8496d98df7-c299q -it -- sh -il
+frontend-deployment-8496d98df7-c299q:/# wget -qO - http://webservice
+frontend-deployment-8496d98df7-c299q:/# wget -qO - http://webservice
+frontend-deployment-8496d98df7-c299q:/# wget -qO - http://webservice
+frontend-deployment-8496d98df7-c299q:/# exit
+```
+*Gateway (ch05)*
+
+```bash
+kubectl apply -f gateway.yaml
+kubectl apply -f webservice-wtdist-vs.yaml
+
+minikube tunnel
+# 게이트웨이를 통한 외부 요청
+curl -v -H "Host: webservice.greetings.com" http://10.103.160.254
+
+# 서비스 프록시 (mesh)
+kubectl exec pod/frontend-deployment-8496d98df7-c299q -it -- sh -il
+frontend-deployment-8496d98df7-c299q:/# wget -qO - http://webservice
 frontend-deployment-8496d98df7-c299q:/# wget -qO - http://webservice
 frontend-deployment-8496d98df7-c299q:/# wget -qO - http://webservice
 frontend-deployment-8496d98df7-c299q:/# wget -qO - http://webservice
