@@ -1,0 +1,34 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: wikipedia
+spec:
+  hosts: # 서비스 항목을 사용해 구성된 호스트 목록을 정의한다.
+  - en.wikipedia.org
+  ports: # 구성된 포트를 정의한다.
+  - number: 80
+    name: http
+    protocol: HTTP
+  - number: 443
+    name: https
+    protocol: HTTPS
+  resolution: DNS # 주소 조회 방법을 정의한다. 호스트 IP 주소가 구성에 정의돼 있으면 DNS 기반이거나 정적일 수 있다.
+  location: MESH_EXTERNAL # 서비스가 있는 위치를 정의한다. 서비스 위치는 내부 또는 외부로 정의될 수 있다. EXTERNAL 서비스의 경우 istio는 mTLS 동작을 비활성화한다.
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: wiki-upgrade-service
+spec:
+  hosts:
+  - en.wikipedia.org
+  tls:
+  - match:
+    - port: 443
+      sniHosts:
+        - en.wikipedia.org
+    route:
+    - destination:
+        host: en.wikipedia.org
+        port:
+          number: 443
