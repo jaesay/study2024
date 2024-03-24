@@ -132,4 +132,16 @@ frontend-deployment-8496d98df7-c299q:/# wget -qO - http://webservice
 frontend-deployment-8496d98df7-c299q:/# wget -qO - http://webservice
 frontend-deployment-8496d98df7-c299q:/# wget -qO - http://webservice
 frontend-deployment-8496d98df7-c299q:/# exit
+
+# 자체 서명 인증서 생성
+openssl req -newkey rsa:2048 -nodes -keyout key.pem -x509 -days 365 -out cert.pem
+
+# 키 암호 제거
+openssl rsa -in key.pem -out key2.pem
+
+# 시크릿 생성
+kubectl create -n istio-system secret tls istio-ingressgateway-certs --key key2.pem --cert cert.pem
+kubectl describe secret istio-ingressgateway-certs -n istio-system
+
+for i in 1 2 3 4; do curl -H "Host: webservice.greetings.com" --resolve "webservice.greetings.com:443:10.103.160.254" -k https://webservice.greetings.com; echo ''; done
 ```

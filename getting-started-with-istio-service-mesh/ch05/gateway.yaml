@@ -4,12 +4,15 @@ metadata:
   name: webapp-gateway
 spec:
   selector:
-    istio: ingressgateway # istio-ingressgateway pod 의 라벨과 일치해야 된다는 것 같다.
+    istio: ingressgateway
   servers:
   - port:
-      number: 80
-      name: http
-      protocol: HTTP
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE # 게이트웨이가 클라이언트의 ID를 검증하지 않는 표준 SSL 구성
+      serverCertificate: /etc/istio/ingressgateway-certs/tls.crt
+      privateKey: /etc/istio/ingressgateway-certs/tls.key
     hosts:
-    - "*.greetings.com"
-#    - '*.default.svc'
+      - "*.greetings.com"
