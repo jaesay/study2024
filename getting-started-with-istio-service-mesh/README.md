@@ -171,8 +171,38 @@ frontend-deployment-8496d98df7-c299q:/# wget -qSO - https://en.wikipedia.org > /
 kubectl apply -f egress-gateway.yaml
 
 kubectl exec pod/frontend-deployment-8496d98df7-c299q -it -- sh -il
-frontend-deployment-8496d98df7-c299q:/# frontend-deployment-8496d98df7-c299q:/# wget -qSO - http://en.wikipedia.org > /dev/null
+frontend-deployment-8496d98df7-c299q:/# wget -qSO - http://en.wikipedia.org > /dev/null
 
 ## istio-system 네임스페이스 내에서 istio=egressgateway 레이블을 가진 모든 포드 중 istio-proxy 컨테이너의 로그를 조회
 kubectl logs -l istio=egressgateway -c istio-proxy -n istio-system
+```
+
+*Service Resilience (ch06)*
+
+```bash
+# 기본 예제 추가
+eval $(minikube docker-env)
+docker build ../../ch04/webapp -t web-app:7.0 --build-arg ver=7.0
+
+kubectl delete all --all
+kubectl delete dr --all
+kubectl delete vs --all
+
+kubectl apply -f webapp-deployment-v7.yaml
+kubectl apply -f webapp-service.yaml
+
+kubectl apply -f frontend-deployment.yaml
+kubectl apply -f frontend-service.yaml
+
+kubectl apply -f destination-rule.yaml
+kubectl apply -f gateway.yaml
+
+kubectl apply -f webapp-vs.yaml
+
+minikube tunnel
+curl -v http://10.99.93.216/
+
+## 사이드카 로그
+kubectl logs <pod-name> -c istio-proxy -n <namespace>
+kubectl logs frontend-deployment-8496d98df7-v8w4d -c istio-proxy
 ```

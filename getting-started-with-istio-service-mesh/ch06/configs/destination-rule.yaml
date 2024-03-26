@@ -1,0 +1,10 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: webapp-destination
+spec:
+  host: webservice 
+  subsets:
+  - name: v0
+    labels:
+      version: v7.0
