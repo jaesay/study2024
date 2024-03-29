@@ -246,4 +246,8 @@ fortio load -c 1 -n 30 -qps 1 -nocatchup -uniform -loglevel Warning http://10.10
 curl -v http://10.106.66.64/
 
 fortio load -c 10 -n 300 -qps 10 -nocatchup -uniform -loglevel Warning http://10.106.66.64/
+
+# fault injection
+kubectl apply -f webapp-vs.yaml
+fortio load -c 10 -n 300 -qps 10 -nocatchup -uniform -loglevel Warning http://10.106.66.64/
 ```
