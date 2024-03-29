@@ -10,3 +10,5 @@ spec:
     - destination:
         host: webservice
         subset: v0
+    retries:
+      attempts: 1

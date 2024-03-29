@@ -235,4 +235,15 @@ curl -v http://10.102.146.12/
 #http://10.102.146.12/: 테스트 대상 URL입니다.
 #요약하자면, 이 명령은 http://10.102.146.12/ 주소로 총 30개의 HTTP 요청을 보내며, 한 번에 하나씩, 매초마다 요청을 보내는 테스트를 실행합니다. 출력 로그는 경고 또는 그보다 중요한 메시지만 포함할 것입니다.
 fortio load -c 1 -n 30 -qps 1 -nocatchup -uniform -loglevel Warning http://10.102.146.12/
+
+# 재시도
+kubectl apply -f webapp-vs.yaml
+## frontend VirtualService 수정
+kubectl apply -f gateway.yaml
+
+fortio load -c 1 -n 30 -qps 1 -nocatchup -uniform -loglevel Warning http://10.106.66.64/
+
+curl -v http://10.106.66.64/
+
+fortio load -c 10 -n 300 -qps 10 -nocatchup -uniform -loglevel Warning http://10.106.66.64/
 ```
