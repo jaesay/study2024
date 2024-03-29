@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webapp-deployment-7.0
+  name: webapp-deployment-7
   labels:
     app: webapp
-    version: v7.0
+    version: v7.1
 spec:
   replicas: 1
   selector:
@@ -14,11 +14,11 @@ spec:
     metadata:
       labels:
         app: webapp
-        version: v7.0
+        version: v7.1
     spec:
       containers:
         - name: webapp
-          image: web-app:7.0
+          image: web-app:7.1
           imagePullPolicy: Never
           ports:
             - containerPort: 5000
