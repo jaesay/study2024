@@ -29,5 +29,7 @@ spec:
       route:
         - destination:
             host: frontendservice
+      timeout: 1s
       retries:
-        attempts: 0
+        attempts: 1
+        perTryTimeout: 0.5s

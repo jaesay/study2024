@@ -250,4 +250,10 @@ fortio load -c 10 -n 300 -qps 10 -nocatchup -uniform -loglevel Warning http://10
 # fault injection
 kubectl apply -f webapp-vs.yaml
 fortio load -c 10 -n 300 -qps 10 -nocatchup -uniform -loglevel Warning http://10.106.66.64/
+
+# 타임아웃
+kubectl apply -f webapp-vs.yaml
+kubectl apply -f gateway.yaml
+
+fortio load -c 1 -n 30 -qps 1 -nocatchup -uniform -loglevel Warning http://10.106.66.64/
 ```
