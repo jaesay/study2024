@@ -6,18 +6,21 @@ spec:
   hosts:
     - webservice
   http:
-  - fault:
+#  - fault:
 #      abort:
 #        httpStatus: 503
 #        percentage:
 #          value: 100
-      delay:
-        fixedDelay: 5s
-        percentage:
-          value: 50
-    route:
-    - destination:
-        host: webservice
-        subset: v0
-    retries:
-      attempts: 0
+#      delay:
+#        fixedDelay: 5s
+#        percentage:
+#          value: 50
+    - route:
+        - destination:
+            host: webservice
+            subset: v0
+          weight: 50
+        - destination:
+            host: webservice
+            subset: v1
+          weight: 50

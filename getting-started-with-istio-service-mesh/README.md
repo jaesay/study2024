@@ -256,4 +256,11 @@ kubectl apply -f webapp-vs.yaml
 kubectl apply -f gateway.yaml
 
 fortio load -c 1 -n 30 -qps 1 -nocatchup -uniform -loglevel Warning http://10.106.66.64/
+
+# Circuit Breaking
+docker build . -t web-app:7.1 --build-arg ver=7.1
+
+## 리소스 및 istio 제거 후 재설치..
+
+fortio load -c 15 -n 300 -qps 15 -nocatchup -uniform -loglevel Warning http://10.99.59.116/
 ```

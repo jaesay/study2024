@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webapp-deployment-7
+  name: webapp-deployment-7.1
   labels:
     app: webapp
     version: v7.1
@@ -19,6 +19,36 @@ spec:
       containers:
         - name: webapp
           image: web-app:7.1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment-7.0
+  labels:
+    app: webapp
+    version: v7.0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+        version: v7.0
+    spec:
+      containers:
+        - name: webapp
+          image: web-app:7.0
           imagePullPolicy: Never
           ports:
             - containerPort: 5000

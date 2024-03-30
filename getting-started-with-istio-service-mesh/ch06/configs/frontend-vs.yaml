@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: frontendservice-vs
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - webapp-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: frontendservice
+#            timeout: 1s
+#      retries:
+#        attempts: 1
+#        perTryTimeout: 0.5s
