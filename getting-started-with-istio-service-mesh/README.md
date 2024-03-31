@@ -198,6 +198,7 @@ kubectl apply -f destination-rule.yaml
 kubectl apply -f gateway.yaml
 
 kubectl apply -f webapp-vs.yaml
+kubectl apply -f frontend-vs.yaml
 
 minikube tunnel
 curl -v http://10.99.93.216/
@@ -262,5 +263,10 @@ docker build . -t web-app:7.1 --build-arg ver=7.1
 
 ## 리소스 및 istio 제거 후 재설치..
 
-fortio load -c 15 -n 300 -qps 15 -nocatchup -uniform -loglevel Warning http://10.99.59.116/
+fortio load -c 4 -n 30 -qps 4 -nocatchup -uniform -loglevel Warning http://10.102.80.218/
+
+kubectl apply -f samples/addons
+kubectl rollout status deployment/kiali -n istio-system
+
+istioctl dashboard kiali
 ```
