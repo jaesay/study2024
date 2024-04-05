@@ -40,6 +40,9 @@ kubectl port-forward svc/frontendservice 8080:80
 kubectl get pod,svc,deploy,all -o yaml,-w,-o wide
 kubectl decsribe pod,svc,deploy <name>
 kubectl logs <pod-name>
+kubectl exec pod/<pod-name> -it -- sh -il
+frontend-deployment-8d465cb6-lmd46:/# wget -qO - http://webservice
+kubectl exec pod/frontend-deployment-8496d98df7-c299q -- wget -O - http://webservice/
 
 # 삭제
 kubectl delete -f <yaml-file>
@@ -58,6 +61,9 @@ kubectl label namespace default istio-injection=enabled
 kubectl apply -f samples/addons
 kubectl rollout status deployment/kiali -n istio-system
 istioctl dashboard kiali
+
+# 사이드카 로그
+kubectl logs <pod-name> -c istio-proxy -n <namespace> -f
 
 # Clean up
 kubectl delete -f samples/addons
