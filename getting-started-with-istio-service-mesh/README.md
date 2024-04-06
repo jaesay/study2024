@@ -14,8 +14,7 @@ minikube tunnel
 # Clean up
 ## Minikube VM 제거, 초기화 후 재시작하려 하고 싶을 때 사용
 minikube delete
-
-# Minikube VM 정지, 리소스 유지할 때 사용
+## Minikube VM 정지, 리소스 유지할 때 사용
 minikube stop
 ```
 
@@ -38,7 +37,7 @@ kubectl port-forward svc/frontendservice 8080:80
 
 # 동작 확인
 kubectl get pod,svc,deploy,all -o yaml,-w,-o wide
-kubectl decsribe pod,svc,deploy <name>
+kubectl describe pod,svc,deploy <name>
 kubectl logs <pod-name>
 kubectl exec pod/<pod-name> -it -- sh -il
 frontend-deployment-8d465cb6-lmd46:/# wget -qO - http://webservice
@@ -66,6 +65,8 @@ istioctl dashboard kiali
 kubectl logs <pod-name> -c istio-proxy -n <namespace> -f
 
 # Clean up
+## 실행 중인 Istio 프로세스 제거
+killall istioctl
 kubectl delete -f samples/addons
 istioctl uninstall -y --purge
 kubectl delete namespace istio-system
