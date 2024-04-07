@@ -52,6 +52,10 @@ kubectl apply -f custom_metrics.yaml
 kubectl get telemetry
 kubectl get pod  productpage-v1-568cf89f48-zkt4n -o yaml | grep -C 10 prometheus
 
+# Grafana
+kubectl -n istio-system get svc grafana
+istioctl dashboard grafana
+
 # Clean up
 killall istioctl
 samples/bookinfo/platform/kube/cleanup.sh
