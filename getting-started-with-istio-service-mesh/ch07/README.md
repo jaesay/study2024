@@ -1,8 +1,10 @@
 # 7장. 애플리케이션 메트릭
 
+- https://istio.io/latest/docs/ops/best-practices/observability/#using-prometheus-for-production-scale-monitoring
 Istio 1.5 이후 버전에서는 Mixer가 제거되면서 메트릭 구성 방식도 변화하였습니다. Mixer는 이전 버전의 Istio에서 정책 결정과 텔레메트리 데이터의 처리를 담당하는 구성 요소였습니다. 하지만 성능과 유연성을 개선하기 위해 Istio는 Mixer를 제거하고 Envoy 프록시와 통합하여 메트릭을 직접 수집하고 보고하는 방식으로 전환했습니다.
 
 - https://istio.io/latest/docs/tasks/observability/metrics/querying-metrics/
+- https://istio.io/latest/docs/tasks/observability/metrics/customize-metrics/
 ```bash
 # Istio Prometheus 설치
 cd istio-1.21.0
@@ -44,6 +46,11 @@ istio_requests_total{destination_service="productpage.default.svc.cluster.local"
 istio_requests_total{destination_service="reviews.default.svc.cluster.local", destination_version="v3"}
 ## 지난 5분 동안 productpage service 모든 인스턴스에 대한 요청 비율
 # rate(istio_requests_total{destination_service=~"productpage.*", response_code="200"}[5m])
+
+# Custom Metrics 생성
+kubectl apply -f custom_metrics.yaml
+kubectl get telemetry
+kubectl get pod  productpage-v1-568cf89f48-zkt4n -o yaml | grep -C 10 prometheus
 
 # Clean up
 killall istioctl
