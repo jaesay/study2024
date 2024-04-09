@@ -53,7 +53,9 @@ kubectl delete all --all
 ```bash
 # Istio 설치
 cd istio-1.21.0
-export PATH=$PWD/bin:$PATH
+vi ~/.zshrc
+export PATH=/Users/jaeseong/istio-1.21.0/bin:$PATH
+source ~/.zshrc
 istioctl install --set profile=demo -y
 kubectl label namespace default istio-injection=enabled
 
