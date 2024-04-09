@@ -1,5 +1,6 @@
 # 8장. 로그 및 추적
 
+## Distributed Tracing
 - https://istio.io/latest/about/faq/distributed-tracing/
 
 Istio는 애플리케이션이 B3 추적 헤더와 Envoy가 생성한 요청 ID를 전파하는 데 의존합니다. 이러한 헤더에는 다음이 포함됩니다:
@@ -19,3 +20,35 @@ istioctl dashboard jaeger
 curl "http://$GATEWAY_URL/productpage"
 fortio load -c 1 -n 30 -qps 1 -nocatchup -uniform -loglevel Warning "http://$GATEWAY_URL/productpage"
 ```
+
+## Logging
+
+- https://istio.io/latest/docs/tasks/observability/logs/otel-provider/
+
+```bash
+# Setting
+kubectl apply -f samples/sleep/sleep.yaml
+
+export SOURCE_POD=$(kubectl get pod -l app=sleep -o jsonpath={.items..metadata.name})
+kubectl apply -f samples/httpbin/httpbin.yaml
+kubectl apply -f samples/open-telemetry/otel.yaml -n istio-system
+
+kubectl edit configmap istio -o yaml -n istio-system
+#extensionProviders:
+#- name: otel
+#  envoyOtelAls:
+#    service: opentelemetry-collector.istio-system.svc.cluster.local
+#    port: 4317
+kubectl apply -f sleep-logging-telemetry.yaml
+
+# Test
+kubectl exec "$SOURCE_POD" -c sleep -- curl -sS -v httpbin:8000/status/418
+kubectl logs -l app=opentelemetry-collector -n istio-system
+
+# Clean up
+kubectl delete telemetry sleep-logging
+kubectl delete -f samples/sleep/sleep.yaml
+kubectl delete -f samples/httpbin/httpbin.yaml
+kubectl delete -f samples/open-telemetry/otel.yaml -n istio-system
+```
+
