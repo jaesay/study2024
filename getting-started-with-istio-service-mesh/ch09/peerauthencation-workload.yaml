@@ -1,0 +1,14 @@
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: "httpbin"
+  namespace: "bar"
+spec:
+  selector:
+    matchLabels:
+      app: httpbin
+  mtls:
+    mode: STRICT
+  portLevelMtls:
+    8080:
+      mode: DISABLE # 특정 포트만 tls 비활성화
