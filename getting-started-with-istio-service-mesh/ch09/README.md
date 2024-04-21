@@ -68,7 +68,7 @@ $ echo $INGRESS_HOST:$INGRESS_PORT
 $ curl "$INGRESS_HOST:$INGRESS_PORT/headers" -s -o /dev/null -w "%{http_code}\n"
 
 # Ingress GW로 진입 시(End User 접근 시) JWT Authentication 추가
-$ kubectl apply -f jwt-example.yaml
+$ kubectl apply -f jwt-authentication-ra.yaml
 $ curl "$INGRESS_HOST:$INGRESS_PORT/headers" -s -o /dev/null -w "%{http_code}\n"
 $ curl --header "Authorization: Bearer deadbeef" "$INGRESS_HOST:$INGRESS_PORT/headers" -s -o /dev/null -w "%{http_code}\n"
 $ TOKEN=$(curl https://raw.githubusercontent.com/istio/istio/release-1.21/security/tools/jwt/samples/demo.jwt -s)
