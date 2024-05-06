@@ -42,14 +42,15 @@ public class OrderCreateHelper {
         Restaurant restaurantInformation = orderDataMapper.createOrderCommandToRestaurant(createOrderCommand);
         return restaurantRepository.findByRestaurantInformation(restaurantInformation).orElseThrow(() -> {
             log.error("Could not find restaurant with restaurant id: {}", createOrderCommand.restaurantId());
-            return new OrderDomainException("Could not find restaurant with restaurant id: " + createOrderCommand.restaurantId());
+            return new OrderDomainException("Could not find restaurant with restaurant id: %s"
+                    .formatted(createOrderCommand.restaurantId()));
         });
     }
 
     private void checkCustomer(UUID customerId) {
         customerRepository.findById(customerId).orElseThrow(() -> {
             log.error("Could not find customer with customer id: {}", customerId);
-            return new OrderDomainException("Could not find customer with customer id: " + customerId);
+            return new OrderDomainException("Could not find customer with customer id: %s".formatted(customerId));
         });
     }
 
