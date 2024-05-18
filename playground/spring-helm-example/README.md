@@ -17,4 +17,20 @@ $ docker images
 # Helm Chart 생성
 $ helm create spring-helm-example-chart
 $ tree spring-helm-example-chart
+
+# Helm Chart 실행
+$ helm list
+$ helm install spring-helm-example spring-helm-example-chart
+
+# 서비스 확인
+$ kubectl get all
+$ kubectl get svc
+$ minikube service spring-helm-example-spring-helm-example-chart --url
+$ http get 127.0.0.1:61795/hello
+
+# Helm Chart 삭제
+$ helm uninstall spring-helm-example
+
+# Minikube 종료
+$ minikube delete
 ```
