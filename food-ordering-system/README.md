@@ -12,3 +12,9 @@
 # kafka-model 모듈에서 수행
 $ mvn clean install
 ```
+## Docker로 Kafka 실행
+```bash
+$ cd infrastructure/docker-compose
+$ docker-compose -f common.yml -f zookeeper.yml up
+
+```
