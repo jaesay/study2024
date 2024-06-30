@@ -1,0 +1,8 @@
+###
+GET localhost:8080/posts/1
+
+###
+GET localhost:8080/comments/1
+
+###
+GET localhost:8080/actuator
