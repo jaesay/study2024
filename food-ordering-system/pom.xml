@@ -19,6 +19,7 @@
         <module>infrastructure</module>
         <module>infrastructure/kafka</module>
         <module>customer-service</module>
+        <module>payment-service</module>
     </modules>
 
     <packaging>pom</packaging>
