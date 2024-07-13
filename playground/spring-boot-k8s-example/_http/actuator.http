@@ -1,0 +1,22 @@
+### endpoint 목록 조회
+GET http://localhost:8081/actuator
+
+### health check
+GET http://localhost:8081/actuator/health
+
+### app info 조회
+GET http://localhost:8081/actuator/info
+
+### logging 정보 조회
+GET http://localhost:8081/actuator/loggers
+
+### 로거 이름으로 logging 정보 조회
+GET http://localhost:8081/actuator/loggers/com.food.ordering.system.springbootk8sexample.controller.LogController
+
+### 실시간 로그 레벨 변경
+POST http://localhost:8081/actuator/loggers/com.food.ordering.system.springbootk8sexample.controller.LogController
+Content-Type: application/json
+
+{
+     "configuredLevel": "TRACE"
+}
