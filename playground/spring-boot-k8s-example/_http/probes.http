@@ -1,0 +1,8 @@
+### 현재 liveness & readiness 조회
+GET localhost:8080/hello
+
+### readiness를 REFUSING_TRAFFIC 전환
+GET localhost:8080/block
+
+### liveness를 BROKEN 전환
+GET localhost:8080/break

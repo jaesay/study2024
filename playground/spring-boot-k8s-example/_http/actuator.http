@@ -20,3 +20,9 @@ Content-Type: application/json
 {
      "configuredLevel": "TRACE"
 }
+
+### liveness probes
+GET http://localhost:8081/actuator/health/liveness
+
+### readiness probes
+GET http://localhost:8081/actuator/health/readiness
