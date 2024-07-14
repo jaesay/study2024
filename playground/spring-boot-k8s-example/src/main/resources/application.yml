@@ -1,4 +1,9 @@
 spring.application.name: spring-boot-k8s-example
+server:
+  shutdown: graceful
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
 
 # Actuator
 management:
