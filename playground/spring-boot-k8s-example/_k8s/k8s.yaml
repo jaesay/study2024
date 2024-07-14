@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-k8s-example
+spec:
+  selector:
+    matchLabels:
+      app: spring-boot-k8s-example
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: spring-boot-k8s-example
+    spec:
+      containers:
+        - name: spring-boot-k8s-example
+          image: spring-boot-k8s-example:0.0.1-SNAPSHOT
+          ports:
+            - containerPort: 8080
+          startupProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8081
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 2
+          livenessProbe:
+            httpGet:
+              port: 8081
+              path: /actuator/health/liveness
+            initialDelaySeconds: 10
+            periodSeconds: 3
+            failureThreshold: 2
+          readinessProbe:
+            httpGet:
+              port: 8081
+              path: /actuator/health/readiness
+            initialDelaySeconds: 10
+            periodSeconds: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-boot-k8s-example
+spec:
+  selector:
+    app: spring-boot-k8s-example
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080
