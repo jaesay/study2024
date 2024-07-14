@@ -33,5 +33,5 @@ tasks.named('test') {
 }
 
 springBoot {
-    buildInfo()
+    buildInfo() // build info for spring boot actuator
 }
