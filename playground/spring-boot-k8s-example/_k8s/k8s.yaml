@@ -16,8 +16,10 @@ spec:
         - name: spring-boot-k8s-example
           image: spring-boot-k8s-example:0.0.1-SNAPSHOT
           ports:
-            - containerPort: 8080
-            - containerPort: 8081
+            - name: http
+              containerPort: 8080
+            - name: actuator
+              containerPort: 8081
           startupProbe:
             httpGet:
               path: /actuator/health/liveness
