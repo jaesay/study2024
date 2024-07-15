@@ -19,6 +19,4 @@ $ kubectl get svc
 # Clean up
 ## Minikube VM 제거, 초기화 후 재시작하려 하고 싶을 때 사용
 minikube delete
-## Minikube VM 정지, 리소스 유지할 때 사용
-minikube stop
 ```
