@@ -1,3 +1,4 @@
+### 성공 시나리오: 주문하기
 POST http://localhost:8181/orders
 Content-Type: application/json
 
@@ -25,3 +26,64 @@ Content-Type: application/json
     }
   ]
 }
+
+### 주문 조회
+GET http://localhost:8181/orders/4ce9411e-653a-459a-a1b3-18c5038cff68
+
+### 실패 시나리오 1: 품절 상품 주문하기
+POST http://localhost:8181/orders
+Content-Type: application/json
+
+{
+  "customerId": "d215b5f8-0249-4dc5-89a3-51fd148cfb41",
+  "restaurantId": "d215b5f8-0249-4dc5-89a3-51fd148cfb45",
+  "address": {
+    "street": "street_1",
+    "postalCode": "1000AB",
+    "city": "Amsterdam"
+  },
+  "price": 25.00,
+  "items": [
+    {
+      "productId": "d215b5f8-0249-4dc5-89a3-51fd148cfb47",
+      "quantity": 1,
+      "price": 25.00,
+      "subTotal": 25.00
+    }
+  ]
+}
+
+### 주문 조회
+GET http://localhost:8181/orders/5d250d72-1b19-4d33-a81c-2c938d65cb2a
+
+### 실패 시나리오 2: credit 부족하게 주문하기
+POST http://localhost:8181/orders
+Content-Type: application/json
+
+{
+  "customerId": "d215b5f8-0249-4dc5-89a3-51fd148cfb41",
+  "restaurantId": "d215b5f8-0249-4dc5-89a3-51fd148cfb45",
+  "address": {
+    "street": "street_1",
+    "postalCode": "1000AB",
+    "city": "Amsterdam"
+  },
+  "price": 550.00,
+  "items": [
+    {
+      "productId": "d215b5f8-0249-4dc5-89a3-51fd148cfb48",
+      "quantity": 1,
+      "price": 50.00,
+      "subTotal": 50.00
+    },
+    {
+      "productId": "d215b5f8-0249-4dc5-89a3-51fd148cfb48",
+      "quantity": 10,
+      "price": 50.00,
+      "subTotal": 500.00
+    }
+  ]
+}
+
+### 주문 조회
+GET http://localhost:8181/orders/7299a863-1078-4629-a16a-0a737cc6bfb7
