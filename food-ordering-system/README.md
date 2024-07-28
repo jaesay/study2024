@@ -22,6 +22,20 @@ $ mvn clean install
 ## Docker로 Kafka 실행
 ```bash
 $ cd infrastructure/docker-compose
-$ docker-compose -f common.yml -f zookeeper.yml up
+docker-compose -f common.yml -f zookeeper.yml up
+
+# zookeeper 살아있는지 확인?
+$ echo ruok | nc localhost 2181
+
+$ docker-compose -f common.yml -f kafka_cluster.yml up
+
+# 한번만..
+$ docker-compose -f common.yml -f init_kafka.yml up
+
+http://localhost:9000/
+
+$ docker-compose -f common.yml -f kafka_cluster.yml down
+
+$ docker-compose -f common.yml -f zookeeper.yml down
 
 ```
